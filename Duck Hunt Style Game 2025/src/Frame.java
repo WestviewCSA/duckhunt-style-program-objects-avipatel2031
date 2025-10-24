@@ -2,29 +2,38 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
+import java.awt.Cursor;
+import java.awt.Point;
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
 	//frame size
-	private int screenWidth = 900, screenHeight = 600;
+	private int screenWidth = 900, screenHeight = 900;
 	private String title = "Duck Hunt";
 	
 	
 	/**
 	 * Declare and instantiate (create) your objects here
 	 */
-	private Duck duckObject = new Duck();
-	
+	private Score score = new Score();
+	private MyCursor cursor = new MyCursor();
+	private Duck blueObject = new Duck();
+	private Background myBackground = new Background();
+	private Strawberry strawberryObject = new Strawberry();
+	private Track trackObject = new Track();
+	private Cherries cherryObject = new Cherries();
+	private pacman pacmanObject = new pacman();
+	private orangeGhost orange = new orangeGhost();
 	public void paint(Graphics pen) {
 		
 		//this line of code is to force redraw the entire frame
@@ -33,10 +42,15 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		//call paint for the object
 		//for objects, you call methods on them using the dot operator
 		//methods use always involve parenthesis
-		duckObject.paint(pen);
-		
-		
-		
+		myBackground.paint(pen);
+		trackObject.paint(pen);
+		cherryObject.paint(pen);
+		strawberryObject.paint(pen);
+		pacmanObject.paint(pen);
+		orange.paint(pen);
+		blueObject.paint(pen);
+		score.paint(pen);
+		cursor.paint(pen);
 	}
 	
 	
@@ -62,6 +76,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void mousePressed(MouseEvent mouse) {
 	    // Runs when a mouse button is pressed down.
 	    // Example: You could start dragging an object here.
+		System.out.println(mouse.getX()+":" + mouse.getY());
+		blueObject.checkCollision(mouse.getX(), mouse.getY());
+		orange.checkCollision(mouse.getX(), mouse.getY());
 	}
 
 	@Override
@@ -127,6 +144,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setLayout(new GridLayout(1,2));
 		f.addMouseListener(this);
 		f.addKeyListener(this);
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image image = toolkit.getImage("/imgs/Crosshair.gif");
+		Cursor a = toolkit.createCustomCursor(image, new Point(this.getX(), this.getY()), "");
+		this.setCursor (a);
+		
 		Timer t = new Timer(16, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

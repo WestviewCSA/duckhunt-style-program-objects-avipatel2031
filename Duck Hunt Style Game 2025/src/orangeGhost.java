@@ -7,27 +7,27 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-public class Duck {
+public class orangeGhost {
 	
-	// The Duck class represents a picture of a duck that can be drawn on the screen.
-	    // Instance variables (data that belongs to each Duck object)
-	    private Image img;               // Stores the picture of the duck
+	// The orangeGhost class represents a picture of a orangeGhost that can be drawn on the screen.
+	    // Instance variables (data that belongs to each orangeGhost object)
+	    private Image img;               // Stores the picture of the orangeGhost
 	    
 	    private Image normal; //normal look
 	    private Image dead;
 	    
-	    private int score;
+	    
 	    private long time = 1225;
 	    private boolean isDead = false; 
 	    
 	    
 	    private AffineTransform tx;      // Used to move (translate) and resize (scale) the image
 
-	    // Variables to control the size (scale) of the duck image
+	    // Variables to control the size (scale) of the orangeGhost image
 	    private double scaleX;           
 	    private double scaleY;           
 
-	    // Variables to control the location (x and y position) of the duck
+	    // Variables to control the location (x and y position) of the orangeGhost
 	    private double x;                
 	    private double y;        
 	    
@@ -38,15 +38,15 @@ public class Duck {
 	    //debugging variable
 	    public boolean debugging = true;
 
-	    // Constructor: runs when you make a new Duck object
-	    public Duck() {
+	    // Constructor: runs when you make a new orangeGhost object
+	    public orangeGhost() {
 	        
-	    	normal = getImage("/imgs/BlueGhost.gif"); // Load the image file
-	        dead = getImage("/imgs/BlueExplode.gif");
+	    	normal = getImage("/imgs/OrangeGhost.gif"); // Load the image file
+	        dead = getImage("/imgs/OrangeExplode.gif");
 	        
 	        //img will point to current state object for image
 	        img = normal;
-	       
+	        
 	        
 	        
 	        
@@ -58,8 +58,8 @@ public class Duck {
 	        // Default values
 	        scaleX = 0.65;
 	        scaleY = 0.65;
-	        x = 120;
-	        y = 350;
+	        x = 250;
+	        y = 450;
 	        
 	        vx = 10;
 	        vy = 10;
@@ -69,7 +69,7 @@ public class Duck {
 	    }
 	    
 	    //2nd constructor to initialize location and scale!
-	    public Duck(int x, int y, int scaleX, int scaleY) {
+	    public orangeGhost(int x, int y, int scaleX, int scaleY) {
 	    	this();
 	    	this.x 		= x;
 	    	this.y 		= y;
@@ -79,7 +79,7 @@ public class Duck {
 	    }
 	    
 	    //2nd constructor to initialize location and scale!
-	    public Duck(int x, int y, int scaleX, int scaleY, int vx, int vy) {
+	    public orangeGhost(int x, int y, int scaleX, int scaleY, int vx, int vy) {
 	    	this();
 	    	this.x 		= x;
 	    	this.y 		= y;
@@ -111,9 +111,7 @@ public class Duck {
 	    		time -= 16;
 	    		if(time <=0) {
 	    			isDead = false;
-	    			time = 1250;
-	    			x = (int)(Math.random()*2+500);
-	    			y = (int)(Math.random()*3+100);
+	    			time = 1050;
 	    			vx = (int)(Math.random()*25+6);
 	    			vy = (int)(Math.random()*25+6);
 	    			img = normal;
@@ -150,6 +148,7 @@ public class Duck {
 	    			if(Math.random()<0.5) {
 	    				vx *= -1;
 	    			}
+	   
 	    		}
 	    				
 	    	}
@@ -160,10 +159,10 @@ public class Duck {
 	    
 	    
 	    
-	    // Draws the duck on the screen
+	    // Draws the orangeGhost on the screen
 	    public void paint(Graphics g) {
 	        Graphics2D g2 = (Graphics2D) g;   // Graphics2D lets us draw images
-	        g2.drawImage(img, tx, null);      // Actually draw the duck image
+	        g2.drawImage(img, tx, null);      // Actually draw the orangeGhost image
 	        update();
 	        init(x,y);
 	        
@@ -175,7 +174,7 @@ public class Duck {
 	        
 	    }
 	    
-	    // Setup method: places the duck at (a, b) and scales it
+	    // Setup method: places the orangeGhost at (a, b) and scales it
 	    private void init(double a, double b) {
 	        tx.setToTranslation(a, b);        // Move the image to position (a, b)
 	        tx.scale(scaleX, scaleY);         // Resize the image using the scale variables
@@ -185,7 +184,7 @@ public class Duck {
 	    private Image getImage(String path) {
 	        Image tempImage = null;
 	        try {
-	            URL imageURL = Duck.class.getResource(path);
+	            URL imageURL = orangeGhost.class.getResource(path);
 	            tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -227,7 +226,7 @@ public class Duck {
 	    		isDead = true;
 	    		
 	    		return true;
-	    	} else {
+	    	}else {
 	    		
 	    		//logic if not colliding
 	    		
@@ -235,12 +234,8 @@ public class Duck {
 	    		
 	    		return false;
 	    	}
-	    	
-	    	
 	    }
-	   
 }
-
 	    
 	
 
