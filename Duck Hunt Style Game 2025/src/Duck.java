@@ -1,4 +1,4 @@
-import java.awt.Color;
+ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -16,7 +16,7 @@ public class Duck {
 	    private Image normal; //normal look
 	    private Image dead;
 	    
-	    private int score;
+	    private int score = 0;
 	    private long time = 1225;
 	    private boolean isDead = false; 
 	    
@@ -173,6 +173,19 @@ public class Duck {
 	            g.drawRect((int) x,  (int) y,  100,  100); //hit box
 	            }
 	        
+	        // --- ADDED: display score on screen ---
+	       
+
+	     // change text size
+	     g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 40)); // name, style, size
+
+	     // change position (x, y)
+	     int textX = 126; // horizontal position
+	     int textY = 810; // vertical position
+	     g.drawString("" + totalScore, textX, textY);
+
+
+
 	    }
 	    
 	    // Setup method: places the duck at (a, b) and scales it
@@ -197,7 +210,7 @@ public class Duck {
 	    public void setScale(double sx, double sy) {
 	        scaleX = sx;
 	        scaleY = sy;
-	        init(x, y);  // Keep current location
+	        init(100, 100);  // Keep current location
 	    }
 
 	    // NEW: Method to set location
@@ -226,22 +239,23 @@ public class Duck {
 	    		img = dead;
 	    		isDead = true;
 	    		
+	    		
+	    		totalScore += 1;
+	    		
 	    		return true;
 	    	} else {
-	    		
-	    		//logic if not colliding
-	    		
-	    		
-	    		
 	    		return false;
 	    	}
-	    	
-	    	
 	    }
 	   
+	    
+	    
+	    private static int totalScore = 0; // shared score across all ducks
+	    
+	    public static int getTotalScore() {
+	        return totalScore;
+	    }
 }
 
-	    
-	
 
 

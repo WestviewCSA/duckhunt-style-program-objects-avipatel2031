@@ -34,15 +34,16 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	private Cherries cherryObject = new Cherries();
 	private pacman pacmanObject = new pacman();
 	private orangeGhost orange = new orangeGhost();
+	Music mouseClickSound = new Music("avi_pew.wav",false);
 	public void paint(Graphics pen) {
 		
 		//this line of code is to force redraw the entire frame
 		super.paintComponent(pen);
 		
 		//call paint for the object
-		//for objects, you call methods on them using the dot operator
-		//methods use always involve parenthesis
-		myBackground.paint(pen);
+	//for objects, you call methods on them using the dot operator
+	//methods use always involve parenthesis
+	myBackground.paint(pen);
 		trackObject.paint(pen);
 		cherryObject.paint(pen);
 		strawberryObject.paint(pen);
@@ -79,7 +80,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		System.out.println(mouse.getX()+":" + mouse.getY());
 		blueObject.checkCollision(mouse.getX(), mouse.getY());
 		orange.checkCollision(mouse.getX(), mouse.getY());
-	}
+		mouseClickSound.play();	}
 
 	@Override
 	public void mouseReleased(MouseEvent mouse) {
