@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -22,35 +23,52 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	private String title = "Duck Hunt";
 	
 	
+	//Music
+	Music mouseClickSound = new Music("avi_pew.wav", false);
+	Music bgMusic = new Music("bg_music.wav", true);
+	
 	/**
 	 * Declare and instantiate (create) your objects here
 	 */
-	private Score score = new Score();
-	private MyCursor cursor = new MyCursor();
-	private Duck blueObject = new Duck();
+	private Duck ghostObject = new Duck();
+	private orangeGhost ghost2Object = new orangeGhost();
 	private Background myBackground = new Background();
-	private Strawberry strawberryObject = new Strawberry();
-	private Track trackObject = new Track();
-	private Cherries cherryObject = new Cherries();
-	private pacman pacmanObject = new pacman();
-	private orangeGhost orange = new orangeGhost();
-	Music mouseClickSound = new Music("avi_pew.wav",false);
+	private Track myTrack = new Track();
+	private pacman myPacman = new pacman();
+	private Cherries myFruit = new Cherries();
+	private Strawberry myFruit2 = new Strawberry();
+	private MyCursor cursor = new MyCursor();
+	private Score scorecount = new Score();
+	
+	private int totalScore = 0; //needs to increment when collision happens
+	private int time = 30;      //not used right now
+
 	public void paint(Graphics pen) {
 		
 		//this line of code is to force redraw the entire frame
 		super.paintComponent(pen);
 		
 		//call paint for the object
-	//for objects, you call methods on them using the dot operator
-	//methods use always involve parenthesis
-	myBackground.paint(pen);
-		trackObject.paint(pen);
-		cherryObject.paint(pen);
-		strawberryObject.paint(pen);
-		pacmanObject.paint(pen);
-		orange.paint(pen);
-		blueObject.paint(pen);
-		score.paint(pen);
+		//for objects, you call methods on them using the dot operator
+		//methods use always involve parenthesis
+		myBackground.paint(pen);
+		myTrack.paint(pen);
+		myFruit2.paint(pen);
+		// drawing text on screen
+		//draw numbers on screen
+		Font f = new Font("Segoe UI", Font.PLAIN, 45);
+		pen.setFont(f);
+		pen.setColor(Color.white);
+		pen.drawString(" " + totalScore, 110, 820);
+		//pen.drawString("" + time, 310, 510);
+		
+		bgMusic.play();
+		myFruit.paint(pen);
+		myPacman.paint(pen);
+		ghost2Object.paint(pen);
+		ghostObject.paint(pen);
+		
+		scorecount.paint(pen);
 		cursor.paint(pen);
 	}
 	
@@ -78,9 +96,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	    // Runs when a mouse button is pressed down.
 	    // Example: You could start dragging an object here.
 		System.out.println(mouse.getX()+":" + mouse.getY());
-		blueObject.checkCollision(mouse.getX(), mouse.getY());
-		orange.checkCollision(mouse.getX(), mouse.getY());
-		mouseClickSound.play();	}
+		
+		
+		//make the music file play each click
+		this.mouseClickSound.play();
+		
+		
+		if(ghostObject.checkCollision(mouse.getX(), mouse.getY())) {
+			totalScore++;
+		}
+			
+		if(ghost2Object.checkCollision(mouse.getX(), mouse.getY())) {
+			totalScore++;
+			
+		}
+	}
 
 	@Override
 	public void mouseReleased(MouseEvent mouse) {
@@ -157,3 +187,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	}
 
 }
+
+
+

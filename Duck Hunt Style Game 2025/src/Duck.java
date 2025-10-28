@@ -177,12 +177,7 @@ public class Duck {
 	       
 
 	     // change text size
-	     g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 40)); // name, style, size
-
-	     // change position (x, y)
-	     int textX = 126; // horizontal position
-	     int textY = 810; // vertical position
-	     g.drawString("" + totalScore, textX, textY);
+	   
 
 
 
@@ -240,7 +235,7 @@ public class Duck {
 	    		isDead = true;
 	    		
 	    		
-	    		totalScore += 1;
+	    		
 	    		
 	    		return true;
 	    	} else {
@@ -250,11 +245,7 @@ public class Duck {
 	   
 	    
 	    
-	    private static int totalScore = 0; // shared score across all ducks
-	    
-	    public static int getTotalScore() {
-	        return totalScore;
-	    }
+	
 }
 
 
