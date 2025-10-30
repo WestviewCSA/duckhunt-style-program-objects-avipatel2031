@@ -26,6 +26,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	//Music
 	Music mouseClickSound = new Music("avi_pew.wav", false);
 	Music bgMusic = new Music("bg_music.wav", true);
+	 Music waveSound = new Music("sfx_wpn_laser9.wav", false);
 	
 	/**
 	 * Declare and instantiate (create) your objects here
@@ -41,7 +42,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	private Score scorecount = new Score();
 	
 	private int totalScore = 0; //needs to increment when collision happens
-	private int time = 30;      //not used right now
+	private int time = 30; 
+	private int wave = 0;   //not used right now
 
 	public void paint(Graphics pen) {
 		
@@ -62,7 +64,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		pen.drawString(" " + totalScore, 110, 820);
 		//pen.drawString("" + time, 310, 510);
 		
-		bgMusic.play();
+		
 		myFruit.paint(pen);
 		myPacman.paint(pen);
 		ghost2Object.paint(pen);
@@ -70,6 +72,36 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		scorecount.paint(pen);
 		cursor.paint(pen);
+		
+	     int newWave = 0;
+	        if (totalScore < 5) newWave = 0;
+	        else if (totalScore < 20) newWave = 1;
+	        else if (totalScore < 30) newWave = 2;
+	        else if (totalScore < 40) newWave = 3;
+	        else if (totalScore < 60) newWave = 4;
+	        else newWave = 5;
+	   
+	        if (newWave != wave) {
+	            wave = newWave;
+	            waveSound.play();
+	            double speedMultiplier = 1 + newWave * 0.25;
+	            int newVX1 = (int)(ghostObject.getVXBase() * speedMultiplier);
+	            int newVY1 = (int)(ghostObject.getVYBase() * speedMultiplier);
+	            int newVX2 = (int)(ghost2Object.getVXBase() * speedMultiplier);
+	            int newVY2 = (int)(ghost2Object.getVYBase() * speedMultiplier);
+	      
+	            ghost2Object.setVelocityVariables(newVX2, newVY2);
+	        }
+
+	        if (newWave < 5) {
+	            Font a = new Font("Segoe UI", Font.PLAIN, 60);
+	            pen.drawString("WAVE " + newWave, 50, 100);
+	        } else {
+	            pen.setColor(Color.green);
+	            Font a = new Font("Segoe UI", Font.PLAIN, 60);
+	            pen.setFont(a);
+	            pen.drawString("CONGRATS!!!", 290, 100);
+	        }
 	}
 	
 	
@@ -110,6 +142,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			totalScore++;
 			
 		}
+		if(ghost2Object.checkCollision(mouse.getX(), mouse.getY())) {
+            totalScore++;
+            myPacman.spin();
+        }
+		if(ghostObject.checkCollision(mouse.getX(), mouse.getY())) {
+            totalScore++;
+            myPacman.spin();
+        }
 	}
 
 	@Override
@@ -184,6 +224,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
+		bgMusic.play();
 	}
 
 }

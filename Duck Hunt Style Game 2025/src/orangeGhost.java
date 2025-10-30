@@ -34,7 +34,8 @@ public class orangeGhost {
 	    //variables for speed
 	    private int vx;
 	    private int vy;
-	    
+	    private int vxBase = 6;
+	    private int vyBase = 6;
 	    //debugging variable
 	    public boolean debugging = true;
 
@@ -95,6 +96,8 @@ public class orangeGhost {
 	    	this.vy = vy;
 	    }
 	    
+	    public int getVXBase() { return vxBase; }
+	    public int getVYBase() { return vyBase; }
 	    
 	    // Changes the picture to a new image file
 	    public void changePicture(String imageFileName) {
@@ -166,11 +169,7 @@ public class orangeGhost {
 	        update();
 	        init(x,y);
 	        
-	        if(debugging) {
-	            //create a green hitbox
-	            g.setColor(Color.green);
-	            g.drawRect((int) x,  (int) y,  100,  100); //hit box
-	            }
+	  
 	        
 	    }
 	    
